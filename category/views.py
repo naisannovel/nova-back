@@ -12,8 +12,17 @@ class CategoryView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, CustomIsAdminUser]
 
+    def get_authenticators(self):
+        if self.request.method == 'POST':
+            # self.authentication_classes = []
+            self.request.user = 'naisan@mail.com'
+        return super().get_authenticators()
+
     def get_permissions(self):
-        return []
+        print(self.request.user)
+        if self.request.method == 'GET':
+            self.permission_classes = []
+        return super().get_permissions()
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
