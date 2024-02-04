@@ -19,9 +19,8 @@ class CategoryView(APIView):
         return super().get_authenticators()
 
     def get_permissions(self):
-        print(self.request.user)
         if self.request.method == 'GET':
-            self.permission_classes = []
+            self.permission_classes = [CustomIsAdminUser]
         return super().get_permissions()
 
     def get(self, request, *args, **kwargs):
